@@ -97,4 +97,26 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// isUserExists
+router.post("/isUserExists", async (req, res) => {
+  const username = req.body.username;
+
+
+  try {
+    const user = await User.find({ username: username });
+    if (user.length > 0) {
+      res.json({
+        success: true,
+        data: user,
+      });
+    } else {
+      res.json({ success: false, message: "there is no user with this username" });
+
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error occured while logging in",error:error });
+  }
+});
+
 module.exports = router;
